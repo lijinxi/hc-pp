@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.scm.pp.dao.mapper.BlMoTicketMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    <id column="line_id" property="lineId" jdbcType="BIGINT" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="ticket_no" property="ticketNo" jdbcType="VARCHAR" />
+    <result column="ticket_type" property="ticketType" jdbcType="VARCHAR" />
+    <result column="workshop_no" property="workshopNo" jdbcType="VARCHAR" />
+    <result column="division_no" property="divisionNo" jdbcType="VARCHAR" />
+    <result column="group_no" property="groupNo" jdbcType="VARCHAR" />
+    <result column="ticket_qty" property="ticketQty" jdbcType="SMALLINT" />
+    <result column="boxno" property="boxno" jdbcType="VARCHAR" />
+    <result column="is_print" property="isPrint" jdbcType="SMALLINT" />
+    <result column="printer" property="printer" jdbcType="VARCHAR" />
+    <result column="print_time" property="printTime" jdbcType="TIMESTAMP" />
+    <result column="is_input" property="isInput" jdbcType="SMALLINT" />
+    <result column="input_status" property="inputStatus" jdbcType="TINYINT" />
+    <result column="inputer" property="inputer" jdbcType="VARCHAR" />
+    <result column="input_time" property="inputTime" jdbcType="TIMESTAMP" />
+    <result column="input_auditor" property="inputAuditor" jdbcType="VARCHAR" />
+    <result column="input_audit_time" property="inputAuditTime" jdbcType="TIMESTAMP" />
+    <result column="is_report" property="isReport" jdbcType="SMALLINT" />
+    <result column="reporter" property="reporter" jdbcType="VARCHAR" />
+    <result column="report_time" property="reportTime" jdbcType="TIMESTAMP" />
+    <result column="whether_sum" property="whetherSum" jdbcType="SMALLINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="bill_status" property="billStatus" jdbcType="TINYINT" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    line_id, bill_no, ticket_no, ticket_type, workshop_no, division_no, group_no, ticket_qty, 
+    boxno, is_print, printer, print_time, is_input, input_status, inputer, input_time, 
+    input_auditor, input_audit_time, is_report, reporter, report_time, whether_sum, creator, 
+    create_time, modifier, modify_time, auditor, audit_time, bill_status, remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM bl_mo_ticket
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM bl_mo_ticket WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM bl_mo_ticket WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM bl_mo_ticket WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    DELETE FROM bl_mo_ticket
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    DELETE FROM bl_mo_ticket
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    INSERT INTO bl_mo_ticket (line_id, bill_no, ticket_no, 
+      ticket_type, workshop_no, division_no, 
+      group_no, ticket_qty, boxno, 
+      is_print, printer, print_time, 
+      is_input, input_status, inputer, 
+      input_time, input_auditor, input_audit_time, 
+      is_report, reporter, report_time, 
+      whether_sum, creator, create_time, 
+      modifier, modify_time, auditor, 
+      audit_time, bill_status, remarks
+      )
+    VALUES (#{lineId,jdbcType=BIGINT}, #{billNo,jdbcType=VARCHAR}, #{ticketNo,jdbcType=VARCHAR}, 
+      #{ticketType,jdbcType=VARCHAR}, #{workshopNo,jdbcType=VARCHAR}, #{divisionNo,jdbcType=VARCHAR}, 
+      #{groupNo,jdbcType=VARCHAR}, #{ticketQty,jdbcType=SMALLINT}, #{boxno,jdbcType=VARCHAR}, 
+      #{isPrint,jdbcType=SMALLINT}, #{printer,jdbcType=VARCHAR}, #{printTime,jdbcType=TIMESTAMP}, 
+      #{isInput,jdbcType=SMALLINT}, #{inputStatus,jdbcType=TINYINT}, #{inputer,jdbcType=VARCHAR}, 
+      #{inputTime,jdbcType=TIMESTAMP}, #{inputAuditor,jdbcType=VARCHAR}, #{inputAuditTime,jdbcType=TIMESTAMP}, 
+      #{isReport,jdbcType=SMALLINT}, #{reporter,jdbcType=VARCHAR}, #{reportTime,jdbcType=TIMESTAMP}, 
+      #{whetherSum,jdbcType=SMALLINT}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{billStatus,jdbcType=TINYINT}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    INSERT INTO bl_mo_ticket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="billNo != null" >
+        bill_no,
+      </if>
+      <if test="ticketNo != null" >
+        ticket_no,
+      </if>
+      <if test="ticketType != null" >
+        ticket_type,
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no,
+      </if>
+      <if test="divisionNo != null" >
+        division_no,
+      </if>
+      <if test="groupNo != null" >
+        group_no,
+      </if>
+      <if test="ticketQty != null" >
+        ticket_qty,
+      </if>
+      <if test="boxno != null" >
+        boxno,
+      </if>
+      <if test="isPrint != null" >
+        is_print,
+      </if>
+      <if test="printer != null" >
+        printer,
+      </if>
+      <if test="printTime != null" >
+        print_time,
+      </if>
+      <if test="isInput != null" >
+        is_input,
+      </if>
+      <if test="inputStatus != null" >
+        input_status,
+      </if>
+      <if test="inputer != null" >
+        inputer,
+      </if>
+      <if test="inputTime != null" >
+        input_time,
+      </if>
+      <if test="inputAuditor != null" >
+        input_auditor,
+      </if>
+      <if test="inputAuditTime != null" >
+        input_audit_time,
+      </if>
+      <if test="isReport != null" >
+        is_report,
+      </if>
+      <if test="reporter != null" >
+        reporter,
+      </if>
+      <if test="reportTime != null" >
+        report_time,
+      </if>
+      <if test="whetherSum != null" >
+        whether_sum,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="billStatus != null" >
+        bill_status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=BIGINT},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNo != null" >
+        #{ticketNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketType != null" >
+        #{ticketType,jdbcType=VARCHAR},
+      </if>
+      <if test="workshopNo != null" >
+        #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionNo != null" >
+        #{divisionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groupNo != null" >
+        #{groupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketQty != null" >
+        #{ticketQty,jdbcType=SMALLINT},
+      </if>
+      <if test="boxno != null" >
+        #{boxno,jdbcType=VARCHAR},
+      </if>
+      <if test="isPrint != null" >
+        #{isPrint,jdbcType=SMALLINT},
+      </if>
+      <if test="printer != null" >
+        #{printer,jdbcType=VARCHAR},
+      </if>
+      <if test="printTime != null" >
+        #{printTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isInput != null" >
+        #{isInput,jdbcType=SMALLINT},
+      </if>
+      <if test="inputStatus != null" >
+        #{inputStatus,jdbcType=TINYINT},
+      </if>
+      <if test="inputer != null" >
+        #{inputer,jdbcType=VARCHAR},
+      </if>
+      <if test="inputTime != null" >
+        #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputAuditor != null" >
+        #{inputAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="inputAuditTime != null" >
+        #{inputAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReport != null" >
+        #{isReport,jdbcType=SMALLINT},
+      </if>
+      <if test="reporter != null" >
+        #{reporter,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTime != null" >
+        #{reportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whetherSum != null" >
+        #{whetherSum,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billStatus != null" >
+        #{billStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    UPDATE bl_mo_ticket
+    <set >
+      <if test="billNo != null" >
+        bill_no = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNo != null" >
+        ticket_no = #{ticketNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketType != null" >
+        ticket_type = #{ticketType,jdbcType=VARCHAR},
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionNo != null" >
+        division_no = #{divisionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="groupNo != null" >
+        group_no = #{groupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketQty != null" >
+        ticket_qty = #{ticketQty,jdbcType=SMALLINT},
+      </if>
+      <if test="boxno != null" >
+        boxno = #{boxno,jdbcType=VARCHAR},
+      </if>
+      <if test="isPrint != null" >
+        is_print = #{isPrint,jdbcType=SMALLINT},
+      </if>
+      <if test="printer != null" >
+        printer = #{printer,jdbcType=VARCHAR},
+      </if>
+      <if test="printTime != null" >
+        print_time = #{printTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isInput != null" >
+        is_input = #{isInput,jdbcType=SMALLINT},
+      </if>
+      <if test="inputStatus != null" >
+        input_status = #{inputStatus,jdbcType=TINYINT},
+      </if>
+      <if test="inputer != null" >
+        inputer = #{inputer,jdbcType=VARCHAR},
+      </if>
+      <if test="inputTime != null" >
+        input_time = #{inputTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputAuditor != null" >
+        input_auditor = #{inputAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="inputAuditTime != null" >
+        input_audit_time = #{inputAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReport != null" >
+        is_report = #{isReport,jdbcType=SMALLINT},
+      </if>
+      <if test="reporter != null" >
+        reporter = #{reporter,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTime != null" >
+        report_time = #{reportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whetherSum != null" >
+        whether_sum = #{whetherSum,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billStatus != null" >
+        bill_status = #{billStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pp.dao.entity.BlMoTicket" >
+    UPDATE bl_mo_ticket
+    SET bill_no = #{billNo,jdbcType=VARCHAR},
+      ticket_no = #{ticketNo,jdbcType=VARCHAR},
+      ticket_type = #{ticketType,jdbcType=VARCHAR},
+      workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      division_no = #{divisionNo,jdbcType=VARCHAR},
+      group_no = #{groupNo,jdbcType=VARCHAR},
+      ticket_qty = #{ticketQty,jdbcType=SMALLINT},
+      boxno = #{boxno,jdbcType=VARCHAR},
+      is_print = #{isPrint,jdbcType=SMALLINT},
+      printer = #{printer,jdbcType=VARCHAR},
+      print_time = #{printTime,jdbcType=TIMESTAMP},
+      is_input = #{isInput,jdbcType=SMALLINT},
+      input_status = #{inputStatus,jdbcType=TINYINT},
+      inputer = #{inputer,jdbcType=VARCHAR},
+      input_time = #{inputTime,jdbcType=TIMESTAMP},
+      input_auditor = #{inputAuditor,jdbcType=VARCHAR},
+      input_audit_time = #{inputAuditTime,jdbcType=TIMESTAMP},
+      is_report = #{isReport,jdbcType=SMALLINT},
+      reporter = #{reporter,jdbcType=VARCHAR},
+      report_time = #{reportTime,jdbcType=TIMESTAMP},
+      whether_sum = #{whetherSum,jdbcType=SMALLINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      bill_status = #{billStatus,jdbcType=TINYINT},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+</mapper>

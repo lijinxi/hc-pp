@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.scm.pp.dao.mapper.VBlMoBoxMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    <id column="box_no" property="boxNo" jdbcType="VARCHAR" />
+    <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
+    <result column="model_no" property="modelNo" jdbcType="VARCHAR" />
+    <result column="style_no" property="styleNo" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="workshop_no" property="workshopNo" jdbcType="VARCHAR" />
+    <result column="schedule_no" property="scheduleNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     a.wrkact_no,a.box_no,a.schedule_no,a.workshop_no,a.start_date,b.model_no,b.style_no
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.workshopNo and ''!=params.workshopNo" >
+        and a.workshop_no= #{params.workshopNo}        
+      </if>
+      <if test="null!=params.startDate and ''!=params.startDate" >
+        and date(a.start_date)= #{params.startDate}        
+      </if>     
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+	from bl_mo_hand a
+	left join pd_wrkact_faci b on a.wrkact_no=b.wrkact_no
+    WHERE a.box_no = #{boxNo,jdbcType=VARCHAR} and a.box_no is not null
+    group by a.wrkact_no,a.box_no,a.schedule_no,a.workshop_no,a.start_date
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s 
+	from bl_mo_hand a
+	left join pd_wrkact_faci b on a.wrkact_no=b.wrkact_no
+    WHERE 1=1 and a.box_no is not null
+    group by a.wrkact_no,a.box_no,a.schedule_no,a.workshop_no,a.start_date
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+	 from bl_mo_hand a
+	 left join pd_wrkact_faci b on a.wrkact_no=b.wrkact_no
+     WHERE 1=1 and a.box_no is not null
+     group by a.wrkact_no,a.box_no,a.schedule_no,a.workshop_no,a.start_date
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+	 from bl_mo_hand a
+	 left join pd_wrkact_faci b on a.wrkact_no=b.wrkact_no
+     WHERE 1=1 and a.box_no is not null
+     group by a.wrkact_no,a.box_no,a.schedule_no,a.workshop_no,a.start_date
+    <include refid="condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM v_bl_mo_box
+    WHERE box_no = #{boxNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    DELETE FROM v_bl_mo_box
+    WHERE box_no = #{boxNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    INSERT INTO v_bl_mo_box (box_no, wrkact_no, model_no, 
+      style_no, start_date, workshop_no, 
+      schedule_no)
+    VALUES (#{boxNo,jdbcType=VARCHAR}, #{wrkactNo,jdbcType=VARCHAR}, #{modelNo,jdbcType=VARCHAR}, 
+      #{styleNo,jdbcType=VARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{workshopNo,jdbcType=VARCHAR}, 
+      #{scheduleNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    INSERT INTO v_bl_mo_box
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="boxNo != null" >
+        box_no,
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no,
+      </if>
+      <if test="modelNo != null" >
+        model_no,
+      </if>
+      <if test="styleNo != null" >
+        style_no,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no,
+      </if>
+      <if test="scheduleNo != null" >
+        schedule_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="boxNo != null" >
+        #{boxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactNo != null" >
+        #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelNo != null" >
+        #{modelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleNo != null" >
+        #{styleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workshopNo != null" >
+        #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleNo != null" >
+        #{scheduleNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    UPDATE v_bl_mo_box
+    <set >
+      <if test="wrkactNo != null" >
+        wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelNo != null" >
+        model_no = #{modelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleNo != null" >
+        style_no = #{styleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleNo != null" >
+        schedule_no = #{scheduleNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE box_no = #{boxNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pp.dao.entity.VBlMoBox" >
+    UPDATE v_bl_mo_box
+    SET wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      model_no = #{modelNo,jdbcType=VARCHAR},
+      style_no = #{styleNo,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      schedule_no = #{scheduleNo,jdbcType=VARCHAR}
+    WHERE box_no = #{boxNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

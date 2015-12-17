@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.scm.pp.dao.mapper.BlMopDtlMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    <id column="line_id" property="lineId" jdbcType="INTEGER" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="factory_no" property="factoryNo" jdbcType="VARCHAR" />
+    <result column="division_no" property="divisionNo" jdbcType="VARCHAR" />
+    <result column="store_no" property="storeNo" jdbcType="VARCHAR" />
+    <result column="workshop_no" property="workshopNo" jdbcType="VARCHAR" />
+    <result column="planer" property="planer" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="DATE" />
+    <result column="schedule_no" property="scheduleNo" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="DATE" />
+    <result column="co_line_no" property="coLineNo" jdbcType="VARCHAR" />
+    <result column="material_no" property="materialNo" jdbcType="VARCHAR" />
+    <result column="bom_purpose" property="bomPurpose" jdbcType="VARCHAR" />
+    <result column="work_order_type" property="workOrderType" jdbcType="VARCHAR" />
+    <result column="associate_no" property="associateNo" jdbcType="VARCHAR" />
+    <result column="mop_status" property="mopStatus" jdbcType="VARCHAR" />
+    <result column="customer_type" property="customerType" jdbcType="VARCHAR" />
+    <result column="group_no" property="groupNo" jdbcType="VARCHAR" />
+    <result column="size_no" property="sizeNo" jdbcType="VARCHAR" />
+    <result column="size_qty" property="sizeQty" jdbcType="INTEGER" />
+    <result column="size_type_no" property="sizeTypeNo" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    line_id, bill_no, factory_no, division_no, store_no, workshop_no, planer, start_date, 
+    schedule_no, end_date, co_line_no, material_no, bom_purpose, work_order_type, associate_no, 
+    mop_status, customer_type, group_no, size_no, size_qty, size_type_no, remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM bl_mop_dtl
+    WHERE line_id = #{lineId,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM bl_mop_dtl WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM bl_mop_dtl WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM bl_mop_dtl WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    DELETE FROM bl_mop_dtl
+    WHERE line_id = #{lineId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    DELETE FROM bl_mop_dtl
+    WHERE line_id = #{lineId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    INSERT INTO bl_mop_dtl (line_id, bill_no, factory_no, 
+      division_no, store_no, workshop_no, 
+      planer, start_date, schedule_no, 
+      end_date, co_line_no, material_no, 
+      bom_purpose, work_order_type, associate_no, 
+      mop_status, customer_type, group_no, 
+      size_no, size_qty, size_type_no, 
+      remarks)
+    VALUES (#{lineId,jdbcType=INTEGER}, #{billNo,jdbcType=VARCHAR}, #{factoryNo,jdbcType=VARCHAR}, 
+      #{divisionNo,jdbcType=VARCHAR}, #{storeNo,jdbcType=VARCHAR}, #{workshopNo,jdbcType=VARCHAR}, 
+      #{planer,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{scheduleNo,jdbcType=VARCHAR}, 
+      #{endDate,jdbcType=DATE}, #{coLineNo,jdbcType=VARCHAR}, #{materialNo,jdbcType=VARCHAR}, 
+      #{bomPurpose,jdbcType=VARCHAR}, #{workOrderType,jdbcType=VARCHAR}, #{associateNo,jdbcType=VARCHAR}, 
+      #{mopStatus,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, #{groupNo,jdbcType=VARCHAR}, 
+      #{sizeNo,jdbcType=VARCHAR}, #{sizeQty,jdbcType=INTEGER}, #{sizeTypeNo,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    INSERT INTO bl_mop_dtl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="billNo != null" >
+        bill_no,
+      </if>
+      <if test="factoryNo != null" >
+        factory_no,
+      </if>
+      <if test="divisionNo != null" >
+        division_no,
+      </if>
+      <if test="storeNo != null" >
+        store_no,
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no,
+      </if>
+      <if test="planer != null" >
+        planer,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="scheduleNo != null" >
+        schedule_no,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="coLineNo != null" >
+        co_line_no,
+      </if>
+      <if test="materialNo != null" >
+        material_no,
+      </if>
+      <if test="bomPurpose != null" >
+        bom_purpose,
+      </if>
+      <if test="workOrderType != null" >
+        work_order_type,
+      </if>
+      <if test="associateNo != null" >
+        associate_no,
+      </if>
+      <if test="mopStatus != null" >
+        mop_status,
+      </if>
+      <if test="customerType != null" >
+        customer_type,
+      </if>
+      <if test="groupNo != null" >
+        group_no,
+      </if>
+      <if test="sizeNo != null" >
+        size_no,
+      </if>
+      <if test="sizeQty != null" >
+        size_qty,
+      </if>
+      <if test="sizeTypeNo != null" >
+        size_type_no,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryNo != null" >
+        #{factoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionNo != null" >
+        #{divisionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNo != null" >
+        #{storeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workshopNo != null" >
+        #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="planer != null" >
+        #{planer,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="scheduleNo != null" >
+        #{scheduleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="coLineNo != null" >
+        #{coLineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNo != null" >
+        #{materialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bomPurpose != null" >
+        #{bomPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrderType != null" >
+        #{workOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="associateNo != null" >
+        #{associateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mopStatus != null" >
+        #{mopStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="groupNo != null" >
+        #{groupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeNo != null" >
+        #{sizeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeQty != null" >
+        #{sizeQty,jdbcType=INTEGER},
+      </if>
+      <if test="sizeTypeNo != null" >
+        #{sizeTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    UPDATE bl_mop_dtl
+    <set >
+      <if test="billNo != null" >
+        bill_no = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryNo != null" >
+        factory_no = #{factoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionNo != null" >
+        division_no = #{divisionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNo != null" >
+        store_no = #{storeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workshopNo != null" >
+        workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      </if>
+      <if test="planer != null" >
+        planer = #{planer,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="scheduleNo != null" >
+        schedule_no = #{scheduleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="coLineNo != null" >
+        co_line_no = #{coLineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNo != null" >
+        material_no = #{materialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bomPurpose != null" >
+        bom_purpose = #{bomPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrderType != null" >
+        work_order_type = #{workOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="associateNo != null" >
+        associate_no = #{associateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mopStatus != null" >
+        mop_status = #{mopStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        customer_type = #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="groupNo != null" >
+        group_no = #{groupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeNo != null" >
+        size_no = #{sizeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sizeQty != null" >
+        size_qty = #{sizeQty,jdbcType=INTEGER},
+      </if>
+      <if test="sizeTypeNo != null" >
+        size_type_no = #{sizeTypeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pp.dao.entity.BlMopDtl" >
+    UPDATE bl_mop_dtl
+    SET bill_no = #{billNo,jdbcType=VARCHAR},
+      factory_no = #{factoryNo,jdbcType=VARCHAR},
+      division_no = #{divisionNo,jdbcType=VARCHAR},
+      store_no = #{storeNo,jdbcType=VARCHAR},
+      workshop_no = #{workshopNo,jdbcType=VARCHAR},
+      planer = #{planer,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      schedule_no = #{scheduleNo,jdbcType=VARCHAR},
+      end_date = #{endDate,jdbcType=DATE},
+      co_line_no = #{coLineNo,jdbcType=VARCHAR},
+      material_no = #{materialNo,jdbcType=VARCHAR},
+      bom_purpose = #{bomPurpose,jdbcType=VARCHAR},
+      work_order_type = #{workOrderType,jdbcType=VARCHAR},
+      associate_no = #{associateNo,jdbcType=VARCHAR},
+      mop_status = #{mopStatus,jdbcType=VARCHAR},
+      customer_type = #{customerType,jdbcType=VARCHAR},
+      group_no = #{groupNo,jdbcType=VARCHAR},
+      size_no = #{sizeNo,jdbcType=VARCHAR},
+      size_qty = #{sizeQty,jdbcType=INTEGER},
+      size_type_no = #{sizeTypeNo,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=INTEGER}
+  </update>
+</mapper>
